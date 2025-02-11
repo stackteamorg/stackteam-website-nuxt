@@ -19,13 +19,10 @@
             <a class="nav-link" href="/about">درباره ما</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="use_case.html">تکنولوژی ها</a>
+            <a class="nav-link" href="/technologies">تکنولوژی ها</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact.html">خدمات سایت</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">دیتیل سرویس</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact.html">بلاگ</a>
