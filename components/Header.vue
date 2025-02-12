@@ -22,7 +22,7 @@
             <a class="nav-link" href="/technologies">تکنولوژی ها</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">خدمات سایت</a>
+            <a class="nav-link" href="/services">خدمات ما</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact.html">بلاگ</a>
