@@ -9,11 +9,13 @@ import Faq from '@/components/Home/Faq.vue';
 </script>
 
 <template>
-    <Banner />
-    <Service />
-    <About />
-    <Process />
-    <TopPosts />
-    <Testimonial />
-    <Faq />
+    <div>
+        <Banner />
+        <Service />
+        <About />
+        <Process />
+        <TopPosts />
+        <Testimonial />
+        <Faq />
+    </div>
 </template>

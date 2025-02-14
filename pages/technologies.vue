@@ -4,6 +4,8 @@ import Backend from "@/components/Technologies/Backend.vue";
 </script>
 
 <template>
-    <Frontend />
-    <Backend />
+    <div>
+        <Frontend />
+        <Backend />
+    </div>
 </template>

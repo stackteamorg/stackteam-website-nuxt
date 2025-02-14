@@ -5,8 +5,10 @@ import Design from "@/components/Services/Design.vue"
 import Application from "@/components/Services/Application.vue"
 </script>
 <template>
-    <Website />
-    <Software />
-    <Design />
-    <Application />
+    <div>
+        <Website />
+        <Software />
+        <Design />
+        <Application />
+    </div>
 </template>

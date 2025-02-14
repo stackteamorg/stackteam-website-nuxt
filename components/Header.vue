@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg tf__main_menu bg-white" dir="rtl">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">استک تیم</a>
+      <NuxtLink to="/" class="navbar-brand">استک تیم</NuxtLink>
       <button class="navbar-toggler" type="button" @click="toggleMenu" aria-controls="navbarSupportedContent"
         :aria-expanded="isMenuOpen" aria-label="Toggle navigation">
         <i v-if="!isMenuOpen" class="fi fi-rr-menu-burger"></i>
@@ -9,62 +9,36 @@
       </button>
       <div class="collapse navbar-collapse" :class="{ 'show': isMenuOpen }" id="navbarSupportedContent">
         <ul class="navbar-nav m-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="/">صفحه اصلی</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/process">فرآیند همکاری</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">درباره ما</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/technologies">تکنولوژی ها</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/services">خدمات ما</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">بلاگ</a>
+          <li v-for="link in navLinks" :key="link.to" class="nav-item">
+            <NuxtLink :to="link.to" class="nav-link" :class="{ active: route.path === link.to }">
+              {{ link.label }}
+            </NuxtLink>
           </li>
         </ul>
         <ul class="tf__menu_btn d-flex flex-wrap align-items-center">
-          <li><a href="signup.html" class="tf__menu_2nd_btn">درخواست همکاری</a></li>
+          <li>
+            <NuxtLink to="/signup" class="tf__menu_2nd_btn">درخواست همکاری</NuxtLink>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const isMenuOpen = ref(false);
+const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
 
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
+const navLinks = [
+  { to: "/", label: "صفحه اصلی" },
+  { to: "/process", label: "فرآیند همکاری" },
+  { to: "/about", label: "درباره ما" },
+  { to: "/technologies", label: "تکنولوژی‌ها" },
+  { to: "/services", label: "خدمات ما" },
+  { to: "/blog", label: "بلاگ" },
+];
 </script>
-
-<style>
-.navbar-toggler {
-  border: none;
-  background: transparent;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.navbar-collapse {
-  transition: all 0.3s ease-in-out;
-}
-
-.collapse:not(.show) {
-  display: none;
-}
-
-@media (max-width: 992px) {
-  .navbar-collapse {
-    display: block;
-  }
-}
-</style>

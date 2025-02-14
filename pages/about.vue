@@ -6,10 +6,12 @@ import OurStory from '@/components/About/OurStory.vue';
 </script>
 
 <template>
-  <Jumbotron />
-  <Mission />
-  <TaaS />
-  <OurStory />
+  <div>
+    <Jumbotron />
+    <Mission />
+    <TaaS />
+    <OurStory />
+  </div>
 </template>
 
 <style>

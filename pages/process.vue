@@ -8,12 +8,14 @@ import StepFour from '@/components/Process/StepFour.vue';
 </script>
 
 <template>
-  <Jumbotron />
-  <Steps />
-  <StepOne />
-  <StepTwo />
-  <StepThree />
-  <StepFour />
+  <div>
+    <Jumbotron />
+    <Steps />
+    <StepOne />
+    <StepTwo />
+    <StepThree />
+    <StepFour />
+  </div>
 </template>
 
 <style>
