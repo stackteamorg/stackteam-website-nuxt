@@ -319,13 +319,14 @@
     .tf__main_menu .navbar-toggler {
         width: 40px;
         height: 40px;
-        line-height: 39px;
-        text-align: center;
         padding: 0;
         background: var(--colorSecondary);
         color: var(--colorWhite);
         font-size: 16px;
         margin-left: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .tf__main_menu .navbar-toggler .close_icon_close {
@@ -711,13 +712,14 @@
     .tf__main_menu .navbar-toggler {
         width: 40px;
         height: 40px;
-        line-height: 39px;
-        text-align: center;
         padding: 0;
         background: var(--colorSecondary);
         color: var(--colorWhite);
         font-size: 16px;
         margin-left: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .tf__main_menu .navbar-toggler .close_icon_close {
@@ -1115,13 +1117,14 @@
     .tf__main_menu .navbar-toggler {
         width: 40px;
         height: 40px;
-        line-height: 39px;
-        text-align: center;
         padding: 0;
         background: var(--colorSecondary);
         color: var(--colorWhite);
         font-size: 16px;
         margin-left: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .tf__main_menu .navbar-toggler .close_icon_close {

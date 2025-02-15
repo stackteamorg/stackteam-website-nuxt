@@ -1228,7 +1228,6 @@ input[type="checkbox"] {
 .tf__faq_accordion .accordion-button::after,
 .tf__faq_accordion .accordion-button:not(.collapsed)::after {
   font-size: 20px;
-  font-family: "Font Awesome 6 Pro";
   background-image: none;
   font-weight: 400;
 }
@@ -1775,8 +1774,8 @@ input[type="checkbox"] {
 
 .tf__blog_search .tf__search_icon {
   position: absolute;
-  top: 8px;
-  left: -45px;
+  top: 12.5px;
+  right: 10px;
   font-size: 20px;
   color: rgba(144, 145, 156, 1);
 }
@@ -1856,7 +1855,6 @@ input[type="checkbox"] {
 }
 .tf__single_blog_text ul li:not(:first-child)::before {
   content: "•";
-  font-family: "Font Awesome 6 Pro";
   font-weight: 900;
   font-size: 13px;
   margin-left: 7px;
@@ -1992,7 +1990,7 @@ input[type="checkbox"] {
 .tf__blog_post_tag h6 {
   font-size: 18px;
   font-weight: 500;
-  margin-right: 10px;
+  margin-left: 10px;
   text-transform: capitalize;
   line-height: 28px;
 }
@@ -2006,7 +2004,7 @@ input[type="checkbox"] {
   color: var(--colorSecondary);
   background: rgba(144, 145, 156, 0.15);
   text-transform: capitalize;
-  margin-right: 10px;
+  margin-left: 10px;
   border: 1px solid transparent;
   transition: all linear 0.3s;
   -webkit-transition: all linear 0.3s;
@@ -2028,7 +2026,7 @@ input[type="checkbox"] {
 .tf__blog_social_link h6 {
   font-size: 18px;
   font-weight: 500;
-  margin-right: 10px;
+  margin-left: 10px;
   text-transform: capitalize;
   line-height: 28px;
 }
@@ -2036,7 +2034,7 @@ input[type="checkbox"] {
 .tf__blog_social_link ul li a,
 .tf__blog_social_media ul li a {
   font-size: 18px;
-  margin-right: 15px;
+  margin-left: 15px;
   color: var(--colorSecondary);
   transition: all linear 0.3s;
   -webkit-transition: all linear 0.3s;
@@ -2047,7 +2045,7 @@ input[type="checkbox"] {
 
 .tf__blog_social_link ul li:last-child a,
 .tf__blog_social_media ul li:last-child a {
-  margin-right: 0;
+  margin-left: 0;
 }
 
 .tf__blog_social_link ul li a:hover,
@@ -2180,10 +2178,12 @@ input[type="checkbox"] {
 .tf__popular_post_img {
   width: 145px;
   height: 72px;
-  margin-right: 12px;
+  margin-left: 12px;
 }
 
 .tf__popular_post_img img {
+  width: 125px !important;
+  height: 100% !important;
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -2196,7 +2196,7 @@ input[type="checkbox"] {
   font-weight: 500;
   font-family: var(--paraFont);
   color: var(--colorSecondary);
-  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .tf__popular_post_text a {

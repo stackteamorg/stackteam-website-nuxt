@@ -133,9 +133,9 @@ onMounted(() => fetchPosts());
                     <!-- Search and Filters -->
                     <div class="col-xl-2 col-lg-2">
                         <form class="tf__blog_search">
-                            <input type="text" placeholder="Search..." />
+                            <input type="text" placeholder="جستجو کنید..." class="pr_40" />
                             <button class="tf__search_icon">
-                                <i class="far fa-search"></i>
+                                <i class="fi fi-rr-search"></i>
                             </button>
                         </form>
                     </div>
