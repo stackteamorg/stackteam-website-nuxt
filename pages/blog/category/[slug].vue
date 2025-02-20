@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRuntimeConfig } from 'nuxt/app';
+import { useRoute,useRuntimeConfig } from 'nuxt/app';
 
 interface Post {
     id: number;
@@ -23,6 +23,12 @@ interface Tag {
   post_count: number;
 }
 
+interface Category {
+  name: string;
+  slug: string;
+  post_count: number;
+}
+
 interface Pagination {
     current_page: number;
     data: Post[];
@@ -33,7 +39,9 @@ interface Pagination {
 }
 
 const config = useRuntimeConfig();
+const route = useRoute();
 const allPosts = ref<Post[]>([]);
+const categoryDetail = ref<Tag>();
 const pagination = ref<Pagination>({
     current_page: 1,
     data: [],
@@ -56,7 +64,7 @@ const truncateExcerpt = (text: string, maxLength: number = 90) => {
 // Fetch all posts with pagination
 const fetchPosts = async (page: number = 1) => {
     try {
-        const response: Pagination = await $fetch(`${config.public.apiBase}/api/posts`, {
+        const response: Pagination = await $fetch(`${config.public.apiBase}/api/posts/category/${route.params.slug}`, {
             params: {
                 page,
                 per_page: pagination.value.per_page,
@@ -71,7 +79,19 @@ const fetchPosts = async (page: number = 1) => {
     }
 };
 
-onMounted(() => fetchPosts());
+const fetchTagDetail = async () => {
+  try {
+    const response: Category = await $fetch(`${config.public.apiBase}/api/category/${route.params.slug}`);
+    categoryDetail.value = response;
+  } catch (error) {
+    console.error('خطا در دریافت پست:', error);
+  }
+};
+
+onMounted(() => {
+    fetchPosts()
+    fetchTagDetail()
+});
 </script>
 
 <template>
@@ -81,7 +101,7 @@ onMounted(() => fetchPosts());
                 <div class="col-xl-8 m-auto">
                     <div class="tf__common_heading pb_20">
                         <h6>خانه / بلاگ</h6>
-                        <h2 class="tf__common_heading_color">آخرین پست ها</h2>
+                        <h2 class="tf__common_heading_color">پست های {{ categoryDetail?.name }}</h2>
                     </div>
                 </div>
             </div>

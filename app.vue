@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 import Header from "@/components/Header.vue";
 import TopBar from "@/components/TopBar.vue";
 import Footer from "@/components/Footer.vue";
+
+const route = useRoute();
+const isAdminRoute = computed(() => route.path.startsWith('/admin'));
 </script>
 
 <template>
-  <TopBar />
-  <Header />
+  <div>
+  <TopBar v-if="!isAdminRoute" />
+  <Header v-if="!isAdminRoute" />
   <div>
     <NuxtPage />
   </div>
-  <Footer />
+  <Footer v-if="!isAdminRoute" />
+  </div>
 </template>
 
 <style scoped>

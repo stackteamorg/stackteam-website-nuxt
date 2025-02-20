@@ -35,7 +35,7 @@
   
   const fetchTopBar = async () => {
     try {
-      const response: TopBarResponse = await $fetch(`${config.public.apiBase}/top-bar`);
+      const response: TopBarResponse = await $fetch(`${config.public.apiBase}/api/top-bar`);
       topBar.value = response;
     } catch (error) {
       console.error('خطا در دریافت اطلاعات نوار بالا:', error);

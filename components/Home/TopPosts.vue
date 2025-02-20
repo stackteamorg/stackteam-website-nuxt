@@ -76,7 +76,7 @@ const truncateExcerpt = (text: string, maxLength: number) => {
 
 const fetchPinnedPosts = async () => {
     try {
-        const response: PinnedPost[] = await $fetch(`${config.public.apiBase}/pinned-posts`);
+        const response: PinnedPost[] = await $fetch(`${config.public.apiBase}/api/pinned-posts`);
         pinnedPosts.value = response;
     } catch (error) {
         console.error('خطا در دریافت مقالات ثابت:', error);

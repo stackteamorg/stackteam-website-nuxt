@@ -19,7 +19,24 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
       public: {
-          apiBase: process.env.NUXT_PUBLIC_API_BASE
+          apiBase: process.env.NUXT_PUBLIC_API_BASE,
+          baseUrl: process.env.BASE_URL
       }
+  },
+  nitro: {
+    devProxy: {
+      '/api': {
+        target: process.env.NUXT_PUBLIC_API_BASE,
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: 'localhost'
+      },
+      '/sanctum': {
+        target: process.env.NUXT_PUBLIC_API_BASE,
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: 'localhost'
+      }
+    }
   }
 })

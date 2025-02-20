@@ -51,7 +51,7 @@ const route = useRoute();
 
 const fetchPost = async () => {
   try {
-    const response: Post = await $fetch(`${config.public.apiBase}/posts/${route.params.slug}`);
+    const response: Post = await $fetch(`${config.public.apiBase}/api/posts/${route.params.slug}`);
     post.value = response;
   } catch (error) {
     console.error('خطا در دریافت پست:', error);
@@ -60,7 +60,7 @@ const fetchPost = async () => {
 
 const fetchCategory = async () => {
   try {
-    const response: Category[] = await $fetch(`${config.public.apiBase}/categories/`);
+    const response: Category[] = await $fetch(`${config.public.apiBase}/api/categories`);
     categories.value = response;
   } catch (error) {
     console.error('خطا در دریافت دسته‌بندی‌ها:', error);
@@ -69,7 +69,7 @@ const fetchCategory = async () => {
 
 const fetchPopularPosts = async () => {
   try {
-    const response: PopularPost[] = await $fetch(`${config.public.apiBase}/popular-posts`);
+    const response: PopularPost[] = await $fetch(`${config.public.apiBase}/api/popular-posts`);
     popularPosts.value = response;
   } catch (error) {
     console.error('خطا در دریافت پست‌های محبوب:', error);
@@ -78,7 +78,7 @@ const fetchPopularPosts = async () => {
 
 const fetchPopularTags = async () => {
   try {
-    const response: Tag[] = await $fetch(`${config.public.apiBase}/popular-tags`);
+    const response: Tag[] = await $fetch(`${config.public.apiBase}/api/popular-tags`);
     popularTags.value = response;
   } catch (error) {
     console.error('خطا در دریافت تگ‌های محبوب:', error);

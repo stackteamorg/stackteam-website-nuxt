@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRuntimeConfig } from 'nuxt/app';
+import { useRoute,useRuntimeConfig } from 'nuxt/app';
 
 interface Post {
     id: number;
@@ -33,7 +33,9 @@ interface Pagination {
 }
 
 const config = useRuntimeConfig();
+const route = useRoute();
 const allPosts = ref<Post[]>([]);
+const tagDetail = ref<Tag>();
 const pagination = ref<Pagination>({
     current_page: 1,
     data: [],
@@ -56,7 +58,7 @@ const truncateExcerpt = (text: string, maxLength: number = 90) => {
 // Fetch all posts with pagination
 const fetchPosts = async (page: number = 1) => {
     try {
-        const response: Pagination = await $fetch(`${config.public.apiBase}/api/posts`, {
+        const response: Pagination = await $fetch(`${config.public.apiBase}/api/posts/tag/${route.params.slug}`, {
             params: {
                 page,
                 per_page: pagination.value.per_page,
@@ -71,7 +73,19 @@ const fetchPosts = async (page: number = 1) => {
     }
 };
 
-onMounted(() => fetchPosts());
+const fetchTagDetail = async () => {
+  try {
+    const response: Tag = await $fetch(`${config.public.apiBase}/api/tag/${route.params.slug}`);
+    tagDetail.value = response;
+  } catch (error) {
+    console.error('خطا در دریافت پست:', error);
+  }
+};
+
+onMounted(() => {
+    fetchPosts()
+    fetchTagDetail()
+});
 </script>
 
 <template>
@@ -81,7 +95,7 @@ onMounted(() => fetchPosts());
                 <div class="col-xl-8 m-auto">
                     <div class="tf__common_heading pb_20">
                         <h6>خانه / بلاگ</h6>
-                        <h2 class="tf__common_heading_color">آخرین پست ها</h2>
+                        <h2 class="tf__common_heading_color">پست های {{ tagDetail?.name }}</h2>
                     </div>
                 </div>
             </div>
