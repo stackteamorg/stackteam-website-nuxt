@@ -3,9 +3,7 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "@/composables/useAuth";
 import { useCookie, useFetch, useRuntimeConfig } from "nuxt/app";
-import PostForm from '@/components/Admin/PostForm.vue';
 
-// Define interfaces
 interface Tag {
   name: string;
   slug: string;
@@ -45,82 +43,35 @@ definePageMeta({
 const { user, logout } = useAuth();
 const config = useRuntimeConfig();
 const router = useRouter();
-const showModal = ref(false);
-const editingPost = ref<Post | null>(null);
 
-// دریافت پست‌ها از API
+// Fetch posts
 const { data: posts, refresh } = useFetch<Post[] | Pagination>(`${config.public.apiBase}/api/posts`, {
   headers: { accept: 'application/json' },
 });
 
-// computed که هم آبجکت pagination رو مدیریت کنه و هم المان‌های null رو فیلتر کنه
 const postsList = computed<Post[]>(() => {
   if (!posts.value) return [];
-  // چک کنید اگر posts.value یک آرایه است یا آبجکت pagination
   const arr = Array.isArray(posts.value)
     ? posts.value
     : (posts.value as Pagination).data;
-  // فیلتر کردن المان‌های null یا بدون id
   return arr.filter((post: Post | null) => post && post.id !== undefined);
 });
 
-const openEditModal = (post?: Post) => {
-  editingPost.value = post || null;
-  showModal.value = true;
-};
-
 const handleDelete = async (postId: number) => {
   if (confirm('Are you sure you want to delete this post?')) {
+    const csrfToken = String(useCookie('XSRF-TOKEN').value)
     await $fetch(`${config.public.apiBase}/api/posts/${postId}`, {
       method: 'DELETE',
       credentials: 'include',
-    });
-    refresh();
+      headers: { 'X-XSRF-TOKEN': csrfToken }
+    })
+    refresh()
   }
 };
 
 const handleLogout = async () => {
   await logout();
   router.push('/admin/login');
-};
-
-const submitForm = async (formData: FormData) => {
-  try {
-    // First, refresh CSRF token
-    await $fetch(`${config.public.apiBase}sanctum/csrf-cookie`, {
-      credentials: 'include',
-      headers: {
-        'Origin': String(config.public.baseUrl),
-      }
-    });
-
-    // Get CSRF token from cookies
-    const csrfToken = String(useCookie('XSRF-TOKEN').value);
-
-    const url = editingPost.value 
-      ? `${config.public.apiBase}/api/posts/${editingPost.value.id}`
-      : `${config.public.apiBase}/api/posts`;
-
-    await $fetch(url, {
-      method: editingPost.value ? 'PUT' : 'POST',
-      body: formData,
-      credentials: 'include',
-      headers: {
-        'X-XSRF-TOKEN': csrfToken, // Add this header
-        'X-Requested-With': 'XMLHttpRequest',
-        'Accept': 'application/json',
-        'Origin': String(config.public.baseUrl),
-      }
-    });
-
-    showModal.value = false;
-    refresh();
-  } catch (error: any) {
-    console.error('Submission error:', error);
-    if (error.response) {
-      console.error('Error response:', error.response._data || error.response);
-    }
-  }
 };
 </script>
 
@@ -133,9 +84,9 @@ const submitForm = async (formData: FormData) => {
       </button>
     </header>
 
-    <button @click="openEditModal()" class="new-post-btn">
+    <RouterLink to="/admin/editor" class="new-post-btn">
       + New Post
-    </button>
+    </RouterLink>
 
     <div class="posts-table" v-if="postsList.length > 0">
       <table>
@@ -149,7 +100,6 @@ const submitForm = async (formData: FormData) => {
           </tr>
         </thead>
         <tbody>
-          <!-- فقط المان‌های معتبر را نمایش می‌دهیم -->
           <tr v-for="post in postsList" :key="post.id">
             <td>{{ post.title }}</td>
             <td>
@@ -160,7 +110,7 @@ const submitForm = async (formData: FormData) => {
             <td>{{ post?.category_name }}</td>
             <td>{{ post.post_type }}</td>
             <td class="actions">
-              <button @click="openEditModal(post)" class="edit-btn">Edit</button>
+              <RouterLink :to="`/admin/editor/${post.id}`" class="edit-btn">Edit</RouterLink>
               <button @click="handleDelete(post.id)" class="delete-btn">Delete</button>
             </td>
           </tr>
@@ -169,18 +119,6 @@ const submitForm = async (formData: FormData) => {
     </div>
     <div v-else>
       <p>No posts available!</p>
-    </div>
-
-    <!-- Post Form Modal -->
-    <div v-if="showModal" class="modal">
-      <div class="modal-content">
-        <span class="close" @click="showModal = false">&times;</span>
-        <PostForm 
-          :post="editingPost"
-          @submit="submitForm"
-          @cancel="showModal = false"
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -211,6 +149,8 @@ const submitForm = async (formData: FormData) => {
   cursor: pointer;
   margin-bottom: 1.5rem;
   transition: opacity 0.2s;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .new-post-btn:hover {
@@ -258,12 +198,13 @@ tr:not(:last-child) {
   color: #00cc2a;
 }
 
-.actions button {
+.actions a, .actions button {
   padding: 0.4rem 0.8rem;
   margin: 0 0.3rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .edit-btn {
@@ -274,38 +215,6 @@ tr:not(:last-child) {
 .delete-btn {
   background-color: #ff4d4d;
   color: white;
-}
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-y: auto;
-}
-
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 600px;
-  position: relative;
-  margin-top: 1050px;
-  margin-bottom: 10px;
-}
-
-.close {
-  position: absolute;
-  right: 1.5rem;
-  top: 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
 }
 
 .logout-btn {
